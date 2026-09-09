@@ -1,0 +1,82 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces/wonk.css";
+@import "@fontsource-variable/fraunces/wonk-italic.css";
+@import "@fontsource-variable/manrope";
+
+@theme {
+  --color-chaux: #f5efe6;
+  --color-chaux-fonce: #ebe2d4;
+  --color-encre: #231c17;
+  --color-terracotta: #c2542d;
+  --color-terracotta-clair: #d9724b;
+  --color-ocre: #d9a441;
+  --color-olive: #3b4232;
+  --color-lin: #cbb9a4;
+
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-doux: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-chaux);
+    color: var(--color-encre);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-terracotta);
+    color: var(--color-chaux);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-variation-settings: "WONK" 1;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.92;
+}
+
+/* Grain minéral : SVG inline, ~1 Ko, aucune requête réseau. */
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  }
+}
+
+@utility filet-anime {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.45s var(--ease-doux);
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
